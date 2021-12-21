@@ -15,6 +15,8 @@ import '@/icons' // icon
 
 Vue.use(ElementUI)
 
+Vue.prototype.$rootApi = process.env.VUE_APP_BASE_API
+
 Vue.config.productionTip = false
 
 new Vue({
