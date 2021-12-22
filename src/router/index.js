@@ -68,6 +68,19 @@ export const constantRoutes = [
     ]
   },
 
+  {
+    path: '/email',
+    component: Layout,
+    children: [
+      {
+        path: 'list',
+        name: 'EmailList',
+        component: () => import('@/views/email/list'),
+        meta: { title: '邮件管理', icon: 'el-icon-message' }
+      }
+    ]
+  },
+
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
