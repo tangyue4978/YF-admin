@@ -58,12 +58,20 @@ export const constantRoutes = [
   {
     path: '/job',
     component: Layout,
+    redirect: '/job/list',
     children: [
       {
         path: 'list',
         name: 'JobList',
         component: () => import('@/views/job/list'),
         meta: { title: '招聘管理', icon: 'nested' }
+      },
+      {
+        path: 'add',
+        name: 'JobAdd',
+        component: () => import('@/views/job/add'),
+        meta: { title: '新建招聘' },
+        hidden: true
       }
     ]
   },

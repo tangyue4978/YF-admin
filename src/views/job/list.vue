@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-button style="margin-bottom: 20px;" type="primary" @click="dialogVisible = true">新增</el-button>
+    <el-button style="margin-bottom: 20px;" type="primary" @click="toAddJob">新增</el-button>
     <el-table
       v-loading="listLoading"
       :data="list"
@@ -9,6 +9,36 @@
       fit
       highlight-current-row
     >
+      <el-table-column align="center" label="职位">
+        <template slot-scope="scope">
+          {{ scope.row.title }}
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="级别">
+        <template slot-scope="scope">
+          {{ scope.row.executive }}
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="全职">
+        <template slot-scope="scope">
+          {{ scope.row.fullTime }}
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="地址">
+        <template slot-scope="scope">
+          {{ scope.row.locale }}
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="工作内容">
+        <template slot-scope="scope">
+          {{ scope.row.subTitle }}
+        </template>
+      </el-table-column>
+
       <el-table-column align="center" label="资格">
         <template slot-scope="scope">
           {{ scope.row.qualification }}
@@ -51,40 +81,6 @@
         </template>
       </el-table-column>
     </el-table>
-
-    <el-dialog
-      title="画廊添加"
-      :visible.sync="dialogVisible"
-      :show-close="false"
-      width="500"
-      center
-    >
-      <el-form ref="gallery" :model="jobObj" label-position="right" label-width="80px">
-        <el-form-item label="资格">
-          <el-input v-model="jobObj.qualification" placeholder="资格" />
-        </el-form-item>
-        <el-form-item label="经验">
-          <el-input v-model="jobObj.experience" placeholder="经验" />
-        </el-form-item>
-        <el-form-item label="年龄">
-          <el-input v-model="jobObj.candidate" placeholder="年龄" />
-        </el-form-item>
-        <el-form-item label="月薪">
-          <el-input v-model="jobObj.monthlySalary" placeholder="月薪" />
-        </el-form-item>
-        <el-form-item label="职责">
-          <el-input v-model="jobObj.responsibilities" type="textarea" placeholder="职责" />
-        </el-form-item>
-        <el-form-item label="要求">
-          <el-input v-model="jobObj.requirements" type="textarea" placeholder="要求" />
-        </el-form-item>
-      </el-form>
-
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addJob">确 定</el-button>
-      </span>
-    </el-dialog>
   </div>
 </template>
 
@@ -95,11 +91,7 @@ export default {
   data() {
     return {
       list: null,
-      listLoading: true,
-      dialogVisible: false,
-      jobObj: {},
-      categoryList: ['Diecut box', 'Rsc box', 'Osc box', 'Tray box', 'Artcard box'],
-      file: null
+      listLoading: true
     }
   },
   created() {
@@ -114,26 +106,9 @@ export default {
       })
     },
 
-    // 文件
-    fileChange(e) {
-      const files = e.target.files
-      if (!files.length) return
-
-      for (let i = 0; i < files.length; i++) {
-        this.file = files[i]
-      }
-    },
-
-    // 添加画廊
-    addJob() {
-      JobApi.addJob(this.jobObj).then((res) => {
-        this.dialogVisible = false
-        this.$message({
-          type: 'success',
-          message: '添加成功!'
-        })
-        this.fetchData()
-      })
+    // 新建招聘
+    toAddJob() {
+      this.$router.push('/job/add')
     },
 
     // 删除
