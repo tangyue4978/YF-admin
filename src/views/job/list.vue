@@ -63,15 +63,19 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="职责">
+      <el-table-column align="center" label="职责" :show-overflow-tooltip="true">
         <template slot-scope="scope">
-          {{ scope.row.responsibilities }}
+          <template v-if="scope.row.responsibilities">
+            <span v-html="JSON.parse(scope.row.responsibilities).join('<br/>')"></span>
+          </template>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="要求">
+      <el-table-column align="center" label="要求" :show-overflow-tooltip="true">
         <template slot-scope="scope">
-          {{ scope.row.requirements }}
+          <template v-if="scope.row.requirements">
+            <span v-html="JSON.parse(scope.row.requirements).join('<br/>')"></span>
+          </template>
         </template>
       </el-table-column>
 
@@ -142,4 +146,10 @@ export default {
   }
 }
 </script>
+
+<style>
+.el-tooltip__popper {
+  max-width: 800px;
+}
+</style>
 

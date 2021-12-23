@@ -119,6 +119,8 @@ export default {
           message: '添加成功!'
         })
         this.fetchData()
+        this.file = null
+        this.galleryObj = {}
       })
     },
 
