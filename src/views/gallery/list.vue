@@ -67,7 +67,7 @@ export default {
       listLoading: true,
       dialogVisible: false,
       galleryObj: {},
-      categoryList: ['Diecut box', 'Rsc box', 'Osc box', 'Tray box', 'Artcard box'],
+      categoryList: ['Diecut box', 'Rsc box', 'Custom box'],
       file: null
     }
   },
