@@ -9,9 +9,21 @@
       fit
       highlight-current-row
     >
+      <el-table-column align="center" label="标题">
+        <template slot-scope="scope">
+          {{ scope.row.title }}
+        </template>
+      </el-table-column>
+
       <el-table-column align="center" label="类型">
         <template slot-scope="scope">
           {{ scope.row.category }}
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="图片">
+        <template slot-scope="scope">
+          <el-image style="height: 100px;" :src="$rootApi + '/' + scope.row.url"></el-image>
         </template>
       </el-table-column>
 
@@ -37,14 +49,22 @@
     >
 
       <el-form ref="gallery" :model="galleryObj" label-position="right" label-width="80px">
+        <el-form-item label="图片标题">
+          <el-input v-model="galleryObj.title" class="file_input" @change="fileChange" />
+        </el-form-item>
         <el-form-item label="画廊类型">
           <el-select v-model="galleryObj.category" placeholder="请选择画廊类型">
             <el-option v-for="item in categoryList" :key="item" :label="item" :value="item" />
           </el-select>
         </el-form-item>
-        <el-form-item label="画廊图片">
+        <el-form-item label="画廊图片1">
           <div class="file_input_box">
             <input class="file_input" type="file" @change="fileChange">
+          </div>
+        </el-form-item>
+        <el-form-item label="画廊图片2">
+          <div class="file_input_box">
+            <input class="file_input" type="file" @change="fileChange2">
           </div>
         </el-form-item>
       </el-form>
@@ -68,7 +88,8 @@ export default {
       dialogVisible: false,
       galleryObj: {},
       categoryList: ['Diecut box', 'Rsc box', 'Custom box'],
-      file: null
+      file: null,
+      hover_file: null
     }
   },
   created() {
@@ -93,6 +114,16 @@ export default {
       }
     },
 
+    // 文件 2
+    fileChange2(e) {
+      const files = e.target.files
+      if (!files.length) return
+
+      for (let i = 0; i < files.length; i++) {
+        this.hover_file = files[i]
+      }
+    },
+
     // 添加画廊
     addGallery() {
       const _formData = new FormData()
@@ -110,6 +141,10 @@ export default {
 
       if (this.file) {
         _formData.append('file', this.file, this.file.name)
+      }
+
+      if (this.hover_file) {
+        _formData.append('hover_file', this.hover_file, this.hover_file.name)
       }
 
       GalleryApi.addGallery(_formData).then((res) => {
