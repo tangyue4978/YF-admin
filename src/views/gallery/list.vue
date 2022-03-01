@@ -21,15 +21,15 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="图片">
+      <el-table-column align="center" label="图片1">
         <template slot-scope="scope">
           <el-image style="height: 100px;" :src="$rootApi + '/' + scope.row.url"></el-image>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="图片">
+      <el-table-column align="center" label="图片2">
         <template slot-scope="scope">
-          <el-image style="height: 100px;" :src="$rootApi + '/' + scope.row.url"></el-image>
+          <el-image style="height: 100px;" :src="$rootApi + '/' + scope.row.cover"></el-image>
         </template>
       </el-table-column>
 
@@ -50,7 +50,7 @@
 
       <el-form ref="gallery" :model="galleryObj" label-position="right" label-width="80px">
         <el-form-item label="图片标题">
-          <el-input v-model="galleryObj.title" class="file_input" @change="fileChange" />
+          <el-input v-model="galleryObj.title" class="file_input" placeholder="请输入图片标题" />
         </el-form-item>
         <el-form-item label="画廊类型">
           <el-select v-model="galleryObj.category" placeholder="请选择画廊类型">
@@ -89,7 +89,7 @@ export default {
       galleryObj: {},
       categoryList: ['Diecut box', 'Rsc box', 'Custom box'],
       file: null,
-      hover_file: null
+      file2: null
     }
   },
   created() {
@@ -120,7 +120,7 @@ export default {
       if (!files.length) return
 
       for (let i = 0; i < files.length; i++) {
-        this.hover_file = files[i]
+        this.file2 = files[i]
       }
     },
 
@@ -143,8 +143,8 @@ export default {
         _formData.append('file', this.file, this.file.name)
       }
 
-      if (this.hover_file) {
-        _formData.append('hover_file', this.hover_file, this.hover_file.name)
+      if (this.file2) {
+        _formData.append('file2', this.file2, this.file2.name)
       }
 
       GalleryApi.addGallery(_formData).then((res) => {
